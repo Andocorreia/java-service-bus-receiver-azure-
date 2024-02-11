@@ -1,0 +1,28 @@
+info:
+  app:
+    name: Serviço Treinamento Service BUS - Receiver
+
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: local
+
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+      status:
+        http-mapping:
+          UP: 200
+          UNKNOWN: 200
+          DOWN: 200
+          OUT_OF_SERVICE: 200
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health,info,metrics
+        exclude:
+
