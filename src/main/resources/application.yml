@@ -8,6 +8,18 @@ server:
 spring:
   profiles:
     active: local
+  jms:
+    servicebus:
+      namespace: "nsservicebustreining"
+      pricing-tier: "Standard"
+      passwordless-enabled: true
+    listener:
+      receive-timeout: 60000
+
+https://nsservicebustreining:
+  servicebus:
+    windows:
+      net/quservicebustreining:
 
 management:
   endpoint:
@@ -25,4 +37,6 @@ management:
       exposure:
         include: health,info,metrics
         exclude:
+
+
 
