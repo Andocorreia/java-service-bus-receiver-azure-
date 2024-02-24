@@ -12,12 +12,15 @@ import org.springframework.jms.core.JmsTemplate;
 
 @SpringBootApplication
 @EnableJms
-public class ServiceBusApplication implements CommandLineRunner {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceBusApplication.class);
+public class ServiceBusReceiverApplication implements CommandLineRunner {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceBusReceiverApplication.class);
     private static final String QUEUE_NAME = "quservicebustreining";
+    private static final String TOPIC_NAME = "tpservicebustreining";
+
+    private static final String SUBSCRIPTION_NAME = "ssservicebustreining";
 
     public static void main(String[] args) {
-        SpringApplication.run(ServiceBusApplication.class, args);
+        SpringApplication.run(ServiceBusReceiverApplication.class, args);
     }
 
     @Autowired
@@ -26,12 +29,19 @@ public class ServiceBusApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
         LOGGER.info("Sending message");
-        jmsTemplate.convertAndSend(QUEUE_NAME, "Hello World");
+        jmsTemplate.convertAndSend(QUEUE_NAME, "Start JOB Queue");
+        jmsTemplate.convertAndSend(TOPIC_NAME, "Start JOB Tipoc");
     }
 
     @JmsListener(destination = QUEUE_NAME, containerFactory = "jmsListenerContainerFactory")
     public void receiveQueueMessage(String message) {
-        LOGGER.info("Message received: {}", message);
+        LOGGER.info("Queue Message received: {}", message);
 
+    }
+
+    @JmsListener(destination = TOPIC_NAME, containerFactory = "topicJmsListenerContainerFactory",
+            subscription = SUBSCRIPTION_NAME)
+    public void receiveTopicMessage(String message) {
+        LOGGER.info("Topic Message received: {}", message);
     }
 }

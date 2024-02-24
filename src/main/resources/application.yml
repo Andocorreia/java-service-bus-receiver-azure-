@@ -13,6 +13,7 @@ spring:
       namespace: "nsservicebustreining"
       pricing-tier: "Standard"
       passwordless-enabled: true
+      topic-client-id: "myclientidnamereceiver"
     listener:
       receive-timeout: 60000
 
